@@ -1,0 +1,6 @@
+.mainContent {
+    flex: 1;
+    padding: 20px;
+    padding-top: 100px; /* Ajusta según la altura del header */
+    overflow-y: auto;
+}

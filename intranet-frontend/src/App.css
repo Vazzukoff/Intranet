@@ -1,0 +1,17 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.contentContainer {
+  display: flex;
+  flex: 1;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: #f9f9f9; /* Ajusta según el diseño */
+}
