@@ -1,43 +1,17 @@
-import CreateTasks from "../../components/tabs/admin/createTasks";
-import Tasks from "../../components/tabs/admin/tasks";
+import { MainContentProps } from "../../models/prop.model";
+import CreateTasksTab from "../../tabs/admin/create-task.tab";
+import AdminTasksTab from "../../tabs/admin/admin.tasks.tab";
+import TasksTab from "../../tabs/employee/tasks.tab";
+import FilesTab from "../../tabs/admin/files.tab";
 
-import EmployeeTasks from "../tabs/employee/employeeTasks";
-import styles from "./styles.module.css";
-
-interface Props {
-  role: string;
-  activeTab: string;
-}
-
-export default function MainContent({ role, activeTab }: Props) {
-  const renderContent = () => {
-    console.log('MainContent - role:', role); // Verificar el rol
-    console.log('MainContent - activeTab:', activeTab); // Verificar la tab activa
-
-    if (role === "employee" || role === "") { 
-      return (
-        <EmployeeTasks />
-      );
-    }
-
-    switch(activeTab) {
-      case "createTask":
-        return <CreateTasks />;
-      case "tasks":
-        return <Tasks />;
-        default:
-          return (
-            <div className="p-4">
-              <h2 className="text-2xl font-bold">Selecciona una opción</h2>
-              <p className="mt-4">Usa el menú lateral para navegar.</p>
-            </div>
-          );
-      }
-    };
+export default function MainContent({ activeTab }: MainContentProps) {
 
   return (
-    <div className={styles.mainContent}>
-      {renderContent()}
+    <div className="flex-1 overflow-auto p-4 bg-gray-100">
+      {activeTab === "create-tasks" && <CreateTasksTab />}
+      {activeTab === "admin-tasks" && <AdminTasksTab />}
+      {activeTab === "tasks" && <TasksTab />}
+      {activeTab === "files" && <FilesTab />}
     </div>
   );
 }
