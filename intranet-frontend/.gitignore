@@ -38,3 +38,4 @@ coverage/
 # Optional: if using Yarn or pnpm
 yarn.lock
 pnpm-lock.yaml
+/src/generated/prisma

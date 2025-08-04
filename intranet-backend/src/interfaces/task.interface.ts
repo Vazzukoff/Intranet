@@ -7,3 +7,5 @@ export interface Task {
     status: Status;
     dueDate: Date
 }
+
+export type CreateTaskDTO = Omit<Task, "id">

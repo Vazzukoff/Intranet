@@ -11,3 +11,5 @@ export interface UserCredentials {
     username: string,
     password: string
 }
+
+export type CreateUserDTO = Pick<User, "username" | "password">  

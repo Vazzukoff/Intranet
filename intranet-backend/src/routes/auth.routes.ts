@@ -1,26 +1,11 @@
 import { Router } from 'express';
-import { register, login, logout } from '../services/auth.service';
+import { logout } from '../services/auth.service';
+import { registerUser, loginUser } from '../controllers/auth.controller'
 
 const router = Router();
 
-router.post('/register', async (req, res) => {
-  try {
-	const user = await register(req.body);
-	res.status(201).json(user);
-  } catch (error) {
-	res.status(400).json({ error: error.message });
-  }
-});
-
-router.post("/login", async (req, res) => {
-    try {
-      const { user } = await login(req.body, res);
-      res.status(200).json({ user });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  });
-
+router.post('/register', registerUser);
+router.post("/login", loginUser);
 router.post('/logout', logout)
 
 export default router;

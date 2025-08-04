@@ -1,5 +1,5 @@
 import Sidebar from "../components/sidebar/sidebar";
-import MainContent from "../components/main-content/main-content";
+import MainContent from "../components/main-content/main.content";
 import Header from "../components/header/header";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/useAuth";
@@ -19,14 +19,12 @@ export default function Home() {
   
   function initialTab(role: Role): string {
     if(role === 'admin') {
-      return "create-tasks";
+      return "admin-tasks";
     }
 
     if(role === 'employee') {
       return "tasks";
     }
-
-    
 
     return "";
   }
@@ -36,12 +34,12 @@ export default function Home() {
   }
   
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar role={role} activeTab={activeTab} onTabChange={setActiveTab} />
+    <section className="flex h-screen bg-gray-100">
+        <Sidebar role={role} activeTab={activeTab} onTabChange={setActiveTab} />
       <div className="flex-1 flex flex-col overflow-hidden pt-[80px]">
         <Header />
-       <MainContent role={role} activeTab={activeTab} />
+        <MainContent role={role} activeTab={activeTab} />
       </div>
-    </div>
+    </section>
   );
 }

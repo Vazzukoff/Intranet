@@ -1,33 +1,33 @@
-import { User, UserCredentials } from "../interfaces/user.interface";
+import { User, UserCredentials, CreateUserDTO } from "../interfaces/user.interface";
 import { pool } from "../db/connection";
 import { hashPassword } from "../utils/security";
-import bcrypt from 'bcrypt';
-import { generateToken } from "../utils/security";
+import { generateToken, comparePassword } from "../utils/security";
 import { createUserSession } from "../session.server";
 import { Response } from "express";
+import { createUser, getUserbyUsername } from "../repositories/user.repository";
+import { UsernameAlreadyExistsError, InvalidCredentialsError } from "../errors/auth.errors";
 
-
-export async function register(user: Omit<User, 'id' | 'role'>): Promise <User> {
+export async function register(
+    user: CreateUserDTO
+): Promise <User> {
     const { username, password } = user;
+    
+    const existingUser = await getUserbyUsername(username)
 
-    const existingUser = await pool.query('SELECT * FROM users WHERE username = $1', [username]   
-    );
-
-    if (existingUser.rows.length > 0) {
-        throw new Error('El nombre de usuario ya está en uso');
+    if (existingUser) {
+        throw new UsernameAlreadyExistsError();
     }
 
     const hashedPassword = await hashPassword(password);
+    const newUser = await createUser({ username, password: hashedPassword });
 
-    const result = await pool.query(
-        'INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id, username, role',
-        [username, hashedPassword, 'employee']
-    );
-
-    return result.rows[0];
+    return newUser;
 }
 
-export async function login({ username, password }: UserCredentials, res: Response) {
+export async function login(
+    { username, password }: UserCredentials,
+    res: Response
+) {
     const result = await pool.query(
         'SELECT * FROM users WHERE username = $1',
         [username]  
@@ -36,13 +36,12 @@ export async function login({ username, password }: UserCredentials, res: Respon
     const user = result.rows[0];
 
     if (!user) {
-        throw new Error('Usuario o contraseña incorrectos');
+        throw new InvalidCredentialsError();
     }
 
-    const comparePassword = await bcrypt.compare(password, user.password);
-
-    if(!comparePassword) {
-        throw new Error('Contraseña incorrecta');
+    const isPasswordValid = await comparePassword(password, user.password);
+    if(!isPasswordValid) {
+        throw new InvalidCredentialsError();
     }
 
     const token = generateToken(user);
@@ -56,8 +55,10 @@ export async function login({ username, password }: UserCredentials, res: Respon
     };
 }
 
-
-export async function logout(_: any, res: Response) {
+export async function logout(
+    _: any,
+    res: Response
+) {
     res.cookie('auth_token', '', {
     httpOnly: true,
     sameSite: 'strict',

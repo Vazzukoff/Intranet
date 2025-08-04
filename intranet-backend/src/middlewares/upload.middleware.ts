@@ -1,16 +1,16 @@
-// /middlewares/upload.middleware.ts
 import multer from 'multer';
 import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
 
-// Configuración de almacenamiento
+const UPLOAD_DIR = path.resolve(process.cwd(), 'src', 'uploads');
+
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads'));
+  destination: (_req, _file, cb) => {
+    cb(null, UPLOAD_DIR);
   },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
+  filename: (_req, file, cb) => {
     const ext = path.extname(file.originalname);
-    cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
+    cb(null, `${uuidv4()}${ext}`);
   }
 });
 

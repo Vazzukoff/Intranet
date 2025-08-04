@@ -12,3 +12,8 @@ export interface AuthContextType {
   error: string | null;
   refetchUser: () => Promise<void>;
 }
+
+export interface AuthFormData {
+  username: string,
+  password: string
+}

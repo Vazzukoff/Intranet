@@ -1,11 +1,10 @@
-// /routes/tasks.routes.ts
 import { Router } from 'express';
 import { upload } from '../middlewares/upload.middleware';
 import { uploadTaskFile } from '../controllers/upload.controller';
+import { requireAuth } from '../middlewares/auth.middleware';
 
 const router = Router();
 
-// Ruta para subir archivo relacionado a una tarea
-router.post('/:taskId', upload.single('file'), uploadTaskFile);
+router.post('/:taskId', requireAuth, upload.single('file'), uploadTaskFile);
 
-export default router;
+export default router

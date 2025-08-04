@@ -1,12 +1,12 @@
-import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
-const LogoutButton: React.FC = () => {
+export default function LogoutButton() {
   const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/auth/logout', {
+      const response = await fetch(`${API_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -24,15 +24,12 @@ const LogoutButton: React.FC = () => {
     }
   }
 
-    return (
-      <button
+  return (
+    <button
       onClick={handleLogout}
-      className="w-[130px] justify-self-end p-2 m-[14px_0] mx-8 hover:border-transparent hover:font-bold focus:outline-none transition-all duration-300"
-  >
+      className="w-[130px] justify-self-end p-2 m-[14px_0] mx-8 border-2 border-transparent rounded-md hover:border-transparent hover:bg-black hover:text-white hover:border-white focus:outline-none transition-all duration-200"
+    >
       Cerrar sesión
-  </button>
-  
-    );
-};
-
-export default LogoutButton;
+    </button>
+  );
+}
