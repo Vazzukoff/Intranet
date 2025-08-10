@@ -17,7 +17,7 @@ export default function FileItem({
   };
 
   const handleDownload = () => {
-    window.open(`${API_URL}/files/download/${file.id}`, '_blank');
+    window.open(`${API_URL}/files/download/${file.fileUuid}`, '_blank');
   };
 
   return (
@@ -26,7 +26,7 @@ export default function FileItem({
     rounded-2xl shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-center justify-between mb-2">
         <a
-          href={`${API_URL}/uploads/${file.filename}`}
+          href={`${API_URL}/uploads/${file.fileUuid}`}
           target="_blank"
           rel="noopener noreferrer"
           className="max-w-xs font-medium text-black truncate hover:underline"

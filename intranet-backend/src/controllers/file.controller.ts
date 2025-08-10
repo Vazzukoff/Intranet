@@ -20,9 +20,9 @@ export async function deleteFileHandler(
   req: Request, 
   res: Response
 ): Promise<void> {
-    const { filename } = req.params;
+    const { fileUuid } = req.params;
     try {
-        await deleteFile(filename);
+        await deleteFile(fileUuid);
         res.status(204).send();
     } catch (error) {
         console.error('[deleteFile] Error:', error);

@@ -29,9 +29,9 @@ const FilesTab = () => {
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {files.map((file: TaskFileWithMeta) => (
               <FileItem
-                key={file.id}
+                key={file.fileUuid}
                 file={file}
-                onDelete={() => removeFile(file.id)}
+                onDelete={() => removeFile(file.fileUuid)}
                 disabled={loading}
               />
             ))}

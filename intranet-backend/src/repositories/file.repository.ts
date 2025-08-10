@@ -1,14 +1,27 @@
 import { pool } from '../db/connection'
 
+export async function getFileByUuid(fileUuid: string) {
+  try {
+    const result = await pool.query(
+      'SELECT file_uuid, mime_type FROM task_files WHERE file_uuid = $1',
+      [fileUuid]
+    );
+    return result.rows[0] || null;
+  } catch (dbErr) {
+    console.error('[getFileByUuid] Error PG:', dbErr);
+    throw new Error('Error de base de datos al obtener archivo');
+  }
+}
+
 export async function deleteFileFromDB(
-  filename: string
+  fileUuid: string
 ): Promise<boolean> {
   let result;
   try {
-    console.log('[deleteFileFromDB] Eliminando ID:', filename);
+    console.log('[deleteFileFromDB] Eliminando ID:', fileUuid);
     result = await pool.query(
-      'DELETE FROM task_files WHERE id = $1 RETURNING *',
-      [filename]
+      'DELETE FROM task_files WHERE file_uuid = $1 RETURNING *',
+      [fileUuid]
     );
   } catch (dbErr) {
     console.error('[deleteFileFromDB] Error PG:', dbErr);

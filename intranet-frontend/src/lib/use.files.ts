@@ -12,7 +12,6 @@ export function useFiles(): UseFilesResult {
     setError(null);
     try {
       const all = await getFiles();
-      console.log('[getFiles] Archivos recibidos:', all);
       setFiles(all);
     } catch (err: any) {
       setError(err.message || 'Error desconocido');
@@ -21,11 +20,11 @@ export function useFiles(): UseFilesResult {
     }
   }, []);
 
-  const removeFile = useCallback(async (id: number) => {
+  const removeFile = useCallback(async (fileUuid: string) => {
     setLoading(true);
     try {
-      await deleteFile(id);
-      setFiles(curr => curr.filter(f => f.id !== id));
+      await deleteFile(fileUuid);
+      setFiles(curr => curr.filter(f => f.fileUuid !== fileUuid));
     } catch (err: any) {
       setError(err.message || 'Error al eliminar archivo');
       throw err;

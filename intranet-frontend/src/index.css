@@ -2,10 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@media (prefers-color-scheme: light) {
-  
-  button {
-    background-color: #f9f9f9;
+@layer components {
+  .btn {
+    @apply bg-white text-black px-4 py-2 rounded;
   }
 }

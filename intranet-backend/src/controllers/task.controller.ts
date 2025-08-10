@@ -74,7 +74,6 @@ export const getPendingTasks = async (
           res.status(401).json({ error: 'No autenticado' });
           return;
         }
-        console.log('[tasks/pending] Usuario autenticado ID =', req.user!.id);
         const tasks = await getPendingTasksFromDB(userId);
         res.status(200).json(tasks);
     } catch (error) {

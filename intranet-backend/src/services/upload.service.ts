@@ -15,11 +15,10 @@ export async function uploadTaskFileService(
   const record: FileRecord = await saveTaskFile(
     taskId,
     fileUuid,
-    storedName,
-    originalName,
-    mimeType,
-    size,
-    userId
+    originalName, // nombre original
+    mimeType,     // tipo MIME
+    size,         // tamaño en bytes
+    userId        // ID del usuario
   );
 
   // Map FileRecord to SavedFileDTO
