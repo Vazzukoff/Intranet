@@ -1,0 +1,27 @@
+{
+  "name": "intranet",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "intranet-frontend",
+    "intranet-backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix intranet-frontend\" \"npm run dev --prefix intranet-backend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vazzukoff/Intranet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vazzukoff/Intranet/issues"
+  },
+  "homepage": "https://github.com/Vazzukoff/Intranet#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}

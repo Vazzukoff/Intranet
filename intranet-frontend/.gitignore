@@ -1,0 +1,41 @@
+# Node.js dependencies
+node_modules/
+
+# Production build
+build/
+dist/
+
+# Misc
+*.log
+*.cache
+*.tmp
+
+# dotenv environment variables
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE/editor folders
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Testing
+coverage/
+*.lcov
+
+# Parcel, Vite, or other bundlers
+.parcel-cache/
+.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional: if using Yarn or pnpm
+yarn.lock
+pnpm-lock.yaml
+/src/generated/prisma

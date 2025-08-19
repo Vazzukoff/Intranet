@@ -1,0 +1,17 @@
+# Node modules
+node_modules/
+intranet-frontend/node_modules/
+intranet-backend/node_modules/
+
+# Logs
+*.log
+
+# Env files
+*.env
+
+# Uploads
+intranet-backend/uploads/
+
+# Sistema (macOS / VSCode)
+.DS_Store
+.vscode/
