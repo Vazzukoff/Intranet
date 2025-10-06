@@ -7,7 +7,11 @@
     "intranet-backend"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev --workspace intranet-frontend\" \"npm run dev --workspace intranet-backend\""
+    "dev": "concurrently \"npm run dev --workspace=intranet-frontend\" \"npm run dev --workspace=intranet-backend\"",
+    "install:frontend": "npm install --workspace=intranet-frontend",
+    "build:frontend": "npm run build --workspace=intranet-frontend",
+    "install:backend": "npm install --workspace=intranet-backend",
+    "build:backend": "npm run build --workspace=intranet-backend"
   },
   "repository": {
     "type": "git",
@@ -22,7 +26,6 @@
   "homepage": "https://github.com/Vazzukoff/Intranet#readme",
   "description": "",
   "devDependencies": {
-    "@rollup/rollup-darwin-arm64": "^4.50.2",
     "concurrently": "^9.2.0"
   }
 }

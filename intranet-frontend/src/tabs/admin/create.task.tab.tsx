@@ -53,7 +53,7 @@ export default function CreateTasksTab() {
     return;
   }
 
-  const { title, description, dueDate } = validation.data;
+  const { title, description } = validation.data;
   const newTask: CreateTaskDTO = {
     title,
     description,

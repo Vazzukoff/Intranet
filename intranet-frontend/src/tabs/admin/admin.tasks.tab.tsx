@@ -87,7 +87,7 @@ export default function AdminTasksTab() {
             <p className="text-xs text-gray-400">
               Fecha límite:
               <span className="font-medium text-gray-700 ml-2">
-                {new Date(task.due_date).toLocaleDateString('es-PE')}
+                {new Date(task.dueDate).toLocaleDateString('es-PE')}
               </span>
             </p>
         

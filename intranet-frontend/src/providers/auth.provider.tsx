@@ -19,7 +19,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const userData = await fetchUserData();
       setUser(userData);
     } catch (err) {
-      if (err.message === 'UNAUTHENTICATED') {
+      if (err instanceof Error && err.message === 'UNAUTHENTICATED') {
         setUser(null);
       } else {
         console.error(err);
