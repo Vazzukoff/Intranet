@@ -15,3 +15,6 @@ intranet-backend/uploads/
 # Sistema (macOS / VSCode)
 .DS_Store
 .vscode/
+# Lock files
+package-lock.json
+*/package-lock.json
