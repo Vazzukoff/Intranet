@@ -2,6 +2,7 @@ import { API_URL } from '../config';
 import { FileItemProps } from '../models/prop.model';
 import { MdDeleteForever } from "react-icons/md";
 import { IoMdDownload } from "react-icons/io";
+import { downloadFile } from '../services/files.service';
 
 export default function FileItem({
   file,
@@ -16,14 +17,19 @@ export default function FileItem({
     }
   };
 
-  const handleDownload = () => {
-    window.open(`${API_URL}/files/download/${file.fileUuid}`, '_blank');
+  const handleDownload = async () => {
+    try {
+      await downloadFile(file.fileUuid, file.original_name);
+    } catch (error) {
+      console.error('Error al descargar archivo:', error);
+      // Aquí podrías mostrar un toast o alerta de error
+    }
   };
 
   return (
     <li 
-    className="relative flex flex-col p-4 bg-white border-2 border-black 
-    rounded-2xl shadow-sm transition-shadow hover:shadow-md">
+      className="relative flex flex-col p-4 bg-white border-2 border-black 
+      rounded-2xl shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-center justify-between mb-2">
         <a
           href={`${API_URL}/uploads/${file.fileUuid}`}

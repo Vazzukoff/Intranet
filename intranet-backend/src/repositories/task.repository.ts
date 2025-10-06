@@ -107,11 +107,41 @@ export async function getPendingTasksFromDB(
     userId: number
 ): Promise<Task[]> {
     const result = await pool.query(
-      `SELECT t.id, t.title, t.description, ut.status, t.due_date AS "dueDate"
-       FROM tasks t
-       JOIN user_tasks ut ON t.id = ut.task_id
-       WHERE ut.user_id = $1 AND ut.status = 'pending'`,
-      [userId]
-    );
+		`SELECT t.id, t.title, t.description, ut.status, t.due_date AS "dueDate"
+			FROM tasks t
+			JOIN user_tasks ut ON t.id = ut.task_id
+			WHERE ut.user_id = $1 AND ut.status = 'pending'`,
+		[userId]
+	);
     return result.rows;
-}  
+}
+
+export async function assignTaskToAllEmployeesInDB(
+    taskId: number
+): Promise<void> {
+	const client = await pool.connect();
+	try {
+			await client.query('BEGIN');
+
+			const employeesResult = await client.query(
+					'SELECT id FROM users WHERE role = $1',
+					['employee']
+			);
+
+			const employeeIds = employeesResult.rows.map((row) => row.id);
+
+			for (const userId of employeeIds) {
+					await client.query(
+							'INSERT INTO user_tasks (user_id, task_id, status) VALUES ($1, $2, $3)',
+							[userId, taskId, 'pending']
+					);
+			}
+
+			await client.query('COMMIT');
+	} catch (error) {
+			await client.query('ROLLBACK');
+			throw error;
+	} finally {
+			client.release();
+	}
+}

@@ -1,17 +1,3 @@
-export interface File {
-  fileName: string;
-  uploadedBy: string;
-  taskId: number;
-}
-
-export interface TaskFileWithMeta {
-  id: number;
-  filename: string;
-  uploaded_by: number;
-  uploaded_by_name: string;
-  task_title: string;
-}
-
 export interface SavedFileDTO {
   id: number;
   fileUuid: string;

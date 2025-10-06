@@ -9,16 +9,14 @@ export async function uploadTaskFileService(
   size: number,
   userId: number
 ): Promise<SavedFileDTO> {
-  // storedName = <uuid>.<ext>
-  const fileUuid = storedName.split('.')[0];
 
   const record: FileRecord = await saveTaskFile(
     taskId,
-    fileUuid,
-    originalName, // nombre original
-    mimeType,     // tipo MIME
-    size,         // tamaño en bytes
-    userId        // ID del usuario
+    storedName,
+    originalName,
+    mimeType,
+    size,
+    userId
   );
 
   // Map FileRecord to SavedFileDTO

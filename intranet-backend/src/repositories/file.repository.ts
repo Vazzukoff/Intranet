@@ -1,9 +1,10 @@
 import { pool } from '../db/connection'
+import { FileRecord } from '../interfaces/file.interface';
 
 export async function getFileByUuid(fileUuid: string) {
   try {
     const result = await pool.query(
-      'SELECT file_uuid, mime_type FROM task_files WHERE file_uuid = $1',
+      'SELECT file_uuid, mime_type, original_name FROM task_files WHERE file_uuid = $1',
       [fileUuid]
     );
     return result.rows[0] || null;
@@ -56,4 +57,14 @@ export const getFileById = async (id: number): Promise<{ filename: string, origi
     [id]
   );
   return rows[0] || null;
+}
+
+export async function getTaskFileById(fileId: number): Promise<FileRecord | null> {
+  const result = await pool.query<FileRecord>(
+    `SELECT id, task_id, file_uuid, original_name, mime_type, size_bytes, uploaded_by, uploaded_at
+     FROM task_files
+     WHERE id = $1`,
+    [fileId]
+  );
+  return result.rows[0] || null;
 }

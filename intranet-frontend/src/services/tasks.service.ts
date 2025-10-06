@@ -11,7 +11,7 @@ export const createTask = async (task: CreateTaskDTO): Promise<Task> => {
     body: JSON.stringify(task),
   });
   return data.task;
-};
+}
 
 export async function deleteTask(id: number): Promise<void> {
   await apiFetch<void>(`${API_URL}/tasks/delete-task/${id}`, {
@@ -29,7 +29,7 @@ export const getTasks = async (): Promise<Task[]> => {
       'Content-Type': 'application/json'
     }
   });
-};
+}
 
 export async function completeTask(taskId: number): Promise<void> {
   await apiFetch<void>(`${API_URL}/tasks/update-tasks/${taskId}`, {

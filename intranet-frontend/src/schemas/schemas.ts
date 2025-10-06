@@ -4,7 +4,7 @@ export const formSchema = z
 .object({
   username: z
     .string()
-    .min(1, "El nombre de usuario debe tener al menos 4 caracteres")
+    .min(1, "El nombre de usuario debe tener al menos 5 caracteres")
     .max(20, "El nombre de usuario no puede tener más de 20 caracteres"),
   password: z
     .string()

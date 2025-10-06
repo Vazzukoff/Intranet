@@ -1,8 +1,7 @@
 import cron from 'node-cron';
 import { pool } from '../db/connection';
 
-// Corre cada hora
-cron.schedule('0 * * * *', async () => {
+cron.schedule('0 0 * * *', async () => {
   console.log('🧹 Ejecutando limpieza de tareas vencidas...');
   try {
     const res = await pool.query(
@@ -13,4 +12,4 @@ cron.schedule('0 * * * *', async () => {
   } catch (err) {
     console.error('❌ Error al eliminar tareas vencidas:', err);
   }
-});
+})

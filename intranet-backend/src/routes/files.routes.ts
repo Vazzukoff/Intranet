@@ -5,6 +5,6 @@ const router = Router();
 
 router.get('/list', getFiles);
 router.delete('/delete/:fileUuid', deleteFileHandler);
-router.get('/download/:id', downloadFile);
+router.get('/download/:fileUuid', downloadFile);
 
 export default router;

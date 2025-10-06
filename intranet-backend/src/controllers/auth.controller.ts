@@ -8,7 +8,7 @@ export async function registerUser(
     res: Response
 ) {
     const { username, password } = req.body as CreateUserDTO;
-        console.log("registrando error");
+    
     try {
         const user = await register({ username, password });
         res.status(201).json(user);

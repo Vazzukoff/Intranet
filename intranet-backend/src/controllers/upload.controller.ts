@@ -8,6 +8,10 @@ export async function uploadTaskFile(
 ): Promise<void> {
   const taskId = Number(req.params.taskId);
   const file = req.file;
+  if (!req.user) {
+    res.status(401).json({ error: 'Usuario no autenticado' });
+    return;
+  }
   const userId = req.user.id;
 
   if (!file) {
@@ -16,7 +20,7 @@ export async function uploadTaskFile(
   }
 
   try {
-    // file.filename tiene el nombre en disco: <uuid>.<ext>
+    
     const savedFile = await uploadTaskFileService(
       taskId,
       file.filename,

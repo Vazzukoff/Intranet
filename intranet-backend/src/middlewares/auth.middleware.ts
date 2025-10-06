@@ -12,33 +12,33 @@ export const requireAuth = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-      const token = getUserToken(req);
-      if (!token) {
-          next(new NoTokenError());
-          return;
-      }
+    const token = getUserToken(req);
+    if (!token) {
+      next(new NoTokenError());
+      return;
+    }
 
-      const decoded = jwt.verify(token, SECRET_KEY as string) as unknown as { id: string };
-      if (!decoded || !decoded.id) {
-          next(new InvalidTokenError());
-          return;
-      }
-      const userId = Number(decoded.id);
+    const decoded = jwt.verify(token, SECRET_KEY as string) as unknown as { id: string };
+    if (!decoded || !decoded.id) {
+      next(new InvalidTokenError());
+      return;
+    }
+    const userId = Number(decoded.id);
 
-      const user = await getUserById(userId);
-      if (!user) {
-          res.status(401).json({ error: 'Usuario no encontrado' });
-          return;
-      }
+    const user = await getUserById(userId);
+    if (!user) {
+      res.status(401).json({ error: 'Usuario no encontrado' });
+      return;
+    }
 
-      req.user = {
-          id: user.id,
-          username: user.username,
-          role: user.role
-        };
+    req.user = {
+      id: user.id,
+      username: user.username,
+      role: user.role
+    };
 
-        next();
-  }   catch (error) {
+      next();
+  }  catch (error) {
     console.error("❗ Error capturado en requireAuth:", error);
       res.status(401).json({ error: 'Tokessssssn inválido o expiras' });
   }};

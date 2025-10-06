@@ -20,14 +20,14 @@ export async function deleteFileHandler(
   req: Request, 
   res: Response
 ): Promise<void> {
-    const { fileUuid } = req.params;
-    try {
-        await deleteFile(fileUuid);
-        res.status(204).send();
-    } catch (error) {
-        console.error('[deleteFile] Error:', error);
-        res.status(400).json({ error: error instanceof Error ? error.message : 'An unexpected error occurred' });
-    }
+  const { fileUuid } = req.params;
+  try {
+      await deleteFile(fileUuid);
+      res.status(204).send();
+  } catch (error) {
+      console.error('[deleteFile] Error:', error);
+      res.status(400).json({ error: error instanceof Error ? error.message : 'An unexpected error occurred' });
+  }
 }
 
 export const downloadFile = async (
@@ -35,13 +35,13 @@ export const downloadFile = async (
   res: Response
 ) => {
   try {
-    const id = Number(req.params.id);
-
-    if (isNaN(id)) {
-      return res.status(400).json({ error: 'ID inválido' });
+    const fileUuid = req.params.fileUuid;
+    
+    if (!fileUuid) {
+      return res.status(400).json({ error: 'UUID inválido' });
     }
 
-    const { filePath, originalName } = await getFileDownloadData(id);
+    const { filePath, originalName } = await getFileDownloadData(fileUuid);
 
     res.download(filePath, originalName, (err) => {
       if (err) {
@@ -54,7 +54,8 @@ export const downloadFile = async (
   } catch (error: any) {
     console.error('[downloadFile] Error:', error.message);
     if (!res.headersSent) {
-      res.status(error.message === 'Archivo no encontrado' ? 404 : 500).json({ error: error.message });
+      const status = error.message.includes('no encontrado') ? 404 : 500;
+      res.status(status).json({ error: error.message });
     }
   }
-}
+};
